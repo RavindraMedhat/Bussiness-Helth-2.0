@@ -147,7 +147,7 @@
             <ul id="companyList" class="company-list">
                 <% var oldScore = 0; %>
                 <% companies.forEach(function (company) { %>
-                    <li onclick="window.location.href='detailPage/<%= company.id %>'">
+                    <li onclick="window.location.href='detail/<%= company.id %>'">
                             <span><%= company.CompanyName %></span>
                             <span><%= company.formattedTimestamp %>&nbsp;&nbsp;&nbsp;&nbsp;
                                 <% if (oldScore < company.overallScore) { %>
