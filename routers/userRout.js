@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-const user = require("../models/users");
+const user = require("../models/Users");
 
 app.get('/register', (req, res) => {
     res.render('register');
