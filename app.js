@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const es = require("express-session");
+const cookieParser = require("cookie-parser");
 
 const allRout = require("./routers/allRout");
 const port = process.env.PORT || 7485;
@@ -18,20 +18,10 @@ db.once('open', () => {
 
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));
-
-app.use(
-    es({
-            secret:"RV",
-            resave:false,
-            saveUninitialized:true
-        })
-    );
-
+app.use(cookieParser());
 
 
 app.use(allRout);
-
-
 
 app.listen(port, () => {
     console.log(`Server is running on https://business-health.cyclic.app/`);

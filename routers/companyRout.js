@@ -28,8 +28,8 @@ app.get("/companyList", async (req, res) => {
     }
 
     try {
-        console.log(req.session.data.Roal);
-        if (req.session.data.Roal === "Admin" || req.session.data.Roal === "Team member") {
+        console.log(req.data.Roal);
+        if (req.data.Roal === "Admin" || req.data.Roal === "Team member") {
             if (req.query.str != null) {
                 var cn = req.query.str;
 
@@ -63,9 +63,9 @@ app.get("/companyList", async (req, res) => {
                 res.render('companyList', { companies: formattedRatings, isAdmin: true });
             }
 
-        } else if (req.session.data.Roal === "Customer") {
+        } else if (req.data.Roal === "Customer") {
 
-            const companyName = req.session.data.CompanyName;
+            const companyName = req.data.CompanyName;
             const ratings = await Rating.find({ CompanyName: companyName }).sort({ timestamps: 1 });
 
             const formattedRatings = ratings.map(rating => ({
@@ -99,7 +99,7 @@ app.post('/submit-ratings', async (req, res) => {
     const transformedData = [];
 
     // Extract the company name
-    const companyName = req.session.data.CompanyName;
+    const companyName = req.data.CompanyName;
     const indicators = await Indicator.find().sort({area : 1});
     // Loop through the indicatorsData array and create the desired structure
     indicators.forEach((item, index) => {
@@ -131,7 +131,7 @@ app.post('/submit-ratings', async (req, res) => {
         const data = new Rating(finalData);
         data.save().then((savedata)=>{
             console.log(savedata._id);
-            sendEmail(req.session.data.Email,req.session.data.CompanyName,savedata._id);
+            sendEmail(req.data.Email,req.data.CompanyName,savedata._id);
             res.redirect('/detail/'+savedata._id);
         });
     } catch (err) {

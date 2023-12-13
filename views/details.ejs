@@ -129,6 +129,7 @@
 
         $.ajax({
             url: `https://business-health.cyclic.app/detail/data/<%= id %>`,
+            //url: `http://localhost:7485/detail/data/<%= id %>`,
             method: 'GET',
             success: function (data) {
                 if (Array.isArray(data)) {
