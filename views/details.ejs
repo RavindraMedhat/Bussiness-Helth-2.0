@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Department Radar Chart</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" type="text/css" href="/styles.css">
+</head>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #fff;
+        /* White background */
+    }
+
+    header {
+        background-color: #d9534f;
+        /* Red header background */
+        color: white;
+        text-align: center;
+        padding: 20px;
+        flex: 1;
+    }
+
+    h1,
+    h2 {
+        text-align: center;
+        color: #d9534f;
+        /* Red text color */
+    }
+
+    #Company {
+        font-size: 24px;
+    }
+
+    #data {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: center;
+        /* Center the content horizontally */
+    }
+
+    .chart-container {
+        width: 40%;
+        margin: 0 auto;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .table-container {
+        width: 40%;
+        padding: 20px;
+    }
+
+    canvas {
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th,
+    td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #d9534f;
+        /* Red table header background */
+        color: white;
+        /* White text color for table headers */
+    }
+
+    #addRatingLink {
+        text-decoration: none;
+        padding: 5px 10px;
+        background-color: #d9534f;
+        /* Red button background */
+        color: #fff;
+        /* White text color for the button */
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+
+    #addRatingLink:hover {
+        background-color: #c9302c;
+        /* Darker red on hover */
+    }
+</style>
+
+<body>
+    <h1 id="Company">
+        <%= Company %>
+    </h1>
+    <h2>Business Health</h2>
+    <a href="/Company/companyList" id="addRatingLink">Back</a>
+    <div id="data">
+        <div class="chart-container">
+            <canvas id="departmentRadarChart"></canvas>
+        </div>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Department</th>
+                        <th>Count</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script>
+        var departments = [];
+        var counts = [];
+
+        $.ajax({
+            url: `http://localhost:7485/Company/data/<%= id %>`,
+            method: 'GET',
+            success: function (data) {
+                if (Array.isArray(data)) {
+                    const departments = data.map(item => item.department);
+                    const counts = data.map(item => item.count);
+
+                    // Create the chart
+                    const ctx = document.getElementById('departmentRadarChart').getContext('2d');
+                    new Chart(ctx, {
+                        type: 'radar',
+                        data: {
+                            labels: departments,
+                            datasets: [{
+                                label: 'Department Counts',
+                                data: counts,
+                                backgroundColor: 'rgba(217, 83, 79, 0.2)', /* Red chart background */
+                                borderColor: 'rgba(217, 83, 79, 1)', /* Red chart border */
+                                borderWidth: 1,
+                            }]
+                        },
+                        options: {
+                                // maintainAspectRatio: true, // Set to false to control aspect ratio independently
+                                // aspectRatio: 10, // Set the aspect ratio (width / height)
+
+                            scales: {
+                                r: {
+                                    beginAtZero: true,
+                                    max: 10,    // Set the maximum value on the radar axis
+                                    stepSize: 1,    // Set the step size for the radar axis
+                                }
+                            }
+                        }
+                    });
+
+                    // Populate the table
+                    const tableBody = document.getElementById('tableBody');
+                    tableBody.innerHTML = ''; // Clear previous content
+                    for (let i = 0; i < departments.length; i++) {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `<td>${departments[i]}</td><td>${counts[i]}</td>`;
+                        tableBody.appendChild(row);
+                    }
+                } else {
+                    console.error('Invalid data format received from the server');
+                }
+            },
+            error: function (error) {
+                console.error(error);
+            }
+        });
+    </script>
+</body>
+
+</html>
