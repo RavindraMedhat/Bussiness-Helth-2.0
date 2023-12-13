@@ -7,10 +7,7 @@ const port = process.env.PORT || 7485;
 
 
 const mongoose = require('mongoose');
-mongoose.connect('mongodb+srv://test:74857485@cluster0.3snq0fm.mongodb.net/BussinessHelthDatabase', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-});
+mongoose.connect('mongodb+srv://test:74857485@cluster0.3snq0fm.mongodb.net/BussinessHelthDatabase');
 
 const db = mongoose.connection;
 
