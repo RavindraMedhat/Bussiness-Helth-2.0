@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-const user = require("../models/Users");
+const Rating = require("../models/ratings")
 
 app.get('/:id', (req, res) => {
     Rating.findById(req.params.id).then((data) => {
