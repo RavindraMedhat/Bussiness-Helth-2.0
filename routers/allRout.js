@@ -27,6 +27,7 @@ app.use("/Company",verify,companyRout);
 app.use("/indicator",verify,isAdmin,indicatorRout);
 
 app.use((req,res)=>{
+    console.log(req.url);
     res.redirect("/Company/companyList");
 })
 module.exports=app;
