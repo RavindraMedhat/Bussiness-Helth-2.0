@@ -1,5 +1,5 @@
 const express = require('express');
-const userRout = require('./UserRout');
+const userRout = require('./userRout');
 const companyRout = require('./companyRout');
 const indicatorRout = require('./indicatorRout');
 const app = express();
