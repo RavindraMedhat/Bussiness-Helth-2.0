@@ -14,12 +14,12 @@ app.get('/:id', (req, res) => {
 });
 
 app.get('/data/:id', (req, res) => {
-    console.log("data");
+    
     var id = req.params.id;
 
     Rating.findById(id).then((data) => {
 
-        console.log(data.Data);
+        
 
         // Initialize an empty object to store the total rating and count for each area
         const areaStats = {};
@@ -48,10 +48,6 @@ app.get('/data/:id', (req, res) => {
         const result = Object.keys(areaStats).map((areaName) => {
             return { department: areaName, count: areaStats[areaName].toFixed(2) };
         });
-
-        console.log(result);
-
-        // console.log(departmentCounts);
 
         res.send(result);
 

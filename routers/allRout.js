@@ -16,8 +16,6 @@ const verifyUser = (req,res,next)=>{
                 res.redirect("/user/login");
             }
             req.data = decode.data;
-            console.log("req.data");
-            console.log(req.data);
             next();
     });
     }else{
@@ -30,7 +28,7 @@ const verifyAdmin = (req,res,next)=>{
     if(t){
         jwt.verify(t,"RKM",(err,decode)=>{
             if(err || decode.data.Roal != "Admin"){
-                res.redirect("/user/login");
+                res.redirect("/Company/companyList");
             }
             req.data = decode;
             next();
@@ -39,22 +37,6 @@ const verifyAdmin = (req,res,next)=>{
         res.redirect("/user/login");
     }
 }
-
-
-// const verify = (req, res, next) => {
-//     if (req.session.data) {
-//         next();
-//     } else {
-//         res.redirect("/user/login");
-//     }
-// };
-// const isAdmin=(req, res, next) => {
-//     if (req.session.data.Roal === "Admin") {
-//         next();
-//     } else {
-//         res.redirect("/user/login");
-//     }
-// };
 
 app.use("/user",userRout);
 app.use("/detail",detailsRout);

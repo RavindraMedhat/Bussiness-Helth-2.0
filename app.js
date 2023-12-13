@@ -19,7 +19,11 @@ db.once('open', () => {
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-
+app.use((req, res, next) => {
+    console.log("New Request");
+    console.log("url : -" + req.hostname + req.url);
+    next();
+})
 
 app.use(allRout);
 

@@ -33,7 +33,7 @@ app.get("/login", (req, res) => {
 app.post("/login", (req, res) => {
     const { Email, Password } = req.body;
 
-    user.findOne({ Email })
+    user.findOne({ Email: { $regex: new RegExp(Email, 'i') } })
         .then((data) => {
 
             if (!data || data.Password !== Password) {

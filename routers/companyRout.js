@@ -1,6 +1,8 @@
 const express = require('express')
 const app = express();
-const moment = require('moment');
+// const moment = require('moment');
+const moment = require('moment-timezone');
+
 const nodemailer = require('nodemailer');
 const ejs=require("ejs");
 
@@ -28,7 +30,7 @@ app.get("/companyList", async (req, res) => {
     }
 
     try {
-        console.log(req.data.Roal);
+        
         if (req.data.Roal === "Admin" || req.data.Roal === "Team member") {
             if (req.query.str != null) {
                 var cn = req.query.str;
@@ -39,11 +41,11 @@ app.get("/companyList", async (req, res) => {
                 const companies = await Rating.find({ CompanyName: { $regex: cn, $options: 'i' } }).sort({ timestamps: 1 }).sort({companyName:1});
                 var overallScore = 0;
                 var i = 0;
-                
+
                 const formattedRatings = companies.map(rating => ({
                     id: rating._id,
                     CompanyName: rating.CompanyName,
-                    formattedTimestamp: moment(rating.timestamps).format('YYYY-MM-DD HH:mm:ss'),
+                    formattedTimestamp: moment(rating.timestamps).tz('Asia/Kolkata').format('DD-MM-YYYY HH:mm:ss'),
                     overallScore: calculateOverallScore(rating.Data),
                 }));
                 res.render('companyList', { companies: formattedRatings, isAdmin: true });
@@ -56,7 +58,7 @@ app.get("/companyList", async (req, res) => {
                 const formattedRatings = last10Ratings.map(rating => ({
                     id: rating._id,
                     CompanyName: rating.CompanyName,
-                    formattedTimestamp: moment(rating.createdAt).format('DD-MM-YYYY HH:mm:ss'),
+                    formattedTimestamp: moment(rating.createdAt).tz('Asia/Kolkata').format('DD-MM-YYYY HH:mm:ss'),
                     overallScore: calculateOverallScore(rating.Data),
                 }));
 
@@ -71,7 +73,7 @@ app.get("/companyList", async (req, res) => {
             const formattedRatings = ratings.map(rating => ({
                 id: rating._id,
                 CompanyName: rating.CompanyName,
-                formattedTimestamp: moment(rating.createdAt).format('DD-MM-YYYY HH:mm:ss'),
+                formattedTimestamp: moment(rating.createdAt).tz('Asia/Kolkata').format('DD-MM-YYYY HH:mm:ss'),
                 overallScore: calculateOverallScore(rating.Data),
             }));
 
@@ -94,7 +96,7 @@ app.get("/addRating",async (req,res)=>{
 });
 
 app.post('/submit-ratings', async (req, res) => {
-    // console.log(req.body);
+    
 
     const transformedData = [];
 
@@ -125,12 +127,12 @@ app.post('/submit-ratings', async (req, res) => {
         CompanyName: companyName,
         Data: transformedData,
     };
-    console.log(finalData);
+    
 
     try {
         const data = new Rating(finalData);
         data.save().then((savedata)=>{
-            console.log(savedata._id);
+           
             sendEmail(req.data.Email,req.data.CompanyName,savedata._id);
             res.redirect('/detail/'+savedata._id);
         });
