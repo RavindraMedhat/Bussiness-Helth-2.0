@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const cookieParser = require("cookie-parser");
+const cors=require("cors");
 
 const allRout = require("./routers/allRout");
 const port = process.env.PORT || 7485;
@@ -19,6 +20,9 @@ db.once('open', () => {
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use(cors());
+
+
 app.use((req, res, next) => {
     console.log("New Request");
     console.log("url : -" + req.hostname + req.url);
