@@ -128,7 +128,7 @@
         var counts = [];
 
         $.ajax({
-            url: `https://business-health.cyclic.app/Company/data/<%= id %>`,
+            url: `https://business-health.cyclic.app/detail/data/<%= id %>`,
             method: 'GET',
             success: function (data) {
                 if (Array.isArray(data)) {
