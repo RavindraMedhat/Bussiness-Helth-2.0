@@ -29,7 +29,7 @@
             width: 100%; /* Full width */
             text-align: center;
             margin-bottom: 20px;
-            margin-top: 50px;
+            margin-top: 110px;
             box-sizing: border-box;
 
         }
@@ -96,7 +96,7 @@
             background-color: #e3e3e3;
         }
         .back-button {
-            float: right;
+            float: left;
             display: block;
             text-align: center;
             margin-top: 20px;
@@ -108,6 +108,7 @@
             transition: background-color 0.3s;
             width: 120px; /* Adjust width as needed */
             margin: 20px auto;
+            margin-left: 10px;
             margin-bottom: 50px;
         }
 
@@ -123,8 +124,8 @@
 </head>
 
 <body>
-    <a href="/Company/companyList" class="back-button">Back</a>
     <h1>All Indicators</h1>
+    <a href="/Company/companyList" class="back-button">Back</a>
     <!-- Form to add a new indicator -->
     <form action="/indicator/addIndicator" method="post" id="addIndicatorForm">
         <label for="area">Area:</label>

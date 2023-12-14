@@ -2,6 +2,7 @@ const express = require('express');
 const userRout = require('./userRout');
 const detailsRout = require('./detailsRout');
 const companyRout = require('./companyRout');
+const profileRout = require('./profileRout');
 const indicatorRout = require('./indicatorRout');
 const jwt = require("jsonwebtoken");
 const app = express();
@@ -40,6 +41,7 @@ const verifyAdmin = (req,res,next)=>{
 
 app.use("/user",userRout);
 app.use("/detail",detailsRout);
+app.use("/profile",verifyUser,profileRout);
 app.use("/Company",verifyUser,companyRout);
 app.use("/indicator",verifyAdmin,indicatorRout);
 

@@ -4,7 +4,6 @@ const app = express();
 const moment = require('moment-timezone');
 
 const nodemailer = require('nodemailer');
-const ejs=require("ejs");
 
 const Indicator = require('../models/indicators');  
 const Rating = require('../models/ratings');
@@ -87,8 +86,6 @@ app.get("/companyList", async (req, res) => {
         res.status(500).send("Internal Server Error");
     }
 });
-
-
 
 app.get("/addRating",async (req,res)=>{
     const indicators = await Indicator.find().sort({area : 1});
