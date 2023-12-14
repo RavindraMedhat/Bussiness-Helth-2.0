@@ -124,14 +124,23 @@ app.get("/sendOTP",(req,res)=>{
         charset: 'numeric',
       });
 
-    verify.findOneAndDelete({Email:Email})
+    verify.findOne({Email:Email})
     .then((deleteddata)=>{
-        console.log(deleteddata);
-        const v = new verify({Email:Email,otp:otp});
-        v.save().then((data)=>{
-            console.log(data);
-            sendEmail(data.Email,data.otp);
-        })
+        if(deleteddata){
+            verify.findByIdAndDelete(deleteddata._id).then((d)=>{
+                const v = new verify({Email:Email,otp:otp});
+                v.save().then((data)=>{
+                    console.log(data);
+                    sendEmail(data.Email,data.otp);
+                });
+            })
+        }else{
+            const v = new verify({Email:Email,otp:otp});
+            v.save().then((data)=>{
+                console.log(data);
+                sendEmail(data.Email,data.otp);
+            })
+        }
     })
     
     res.send("otp sent");
