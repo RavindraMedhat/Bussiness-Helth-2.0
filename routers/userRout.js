@@ -124,24 +124,24 @@ app.get("/sendOTP",(req,res)=>{
         charset: 'numeric',
       });
 
-    verify.findOne({Email:Email})
-    .then((deleteddata)=>{
-        if(deleteddata){
-            verify.findByIdAndDelete(deleteddata._id).then((d)=>{
-                const v = new verify({Email:Email,otp:otp});
-                v.save().then((data)=>{
-                    console.log(data);
-                    sendEmail(data.Email,data.otp);
-                });
-            })
-        }else{
+    // verify.findOne({Email:Email})
+    // .then((deleteddata)=>{
+    //     if(deleteddata){
+    //         verify.findByIdAndDelete(deleteddata._id).then((d)=>{
+    //             const v = new verify({Email:Email,otp:otp});
+    //             v.save().then((data)=>{
+    //                 console.log(data);
+    //                 sendEmail(data.Email,data.otp);
+    //             });
+    //         })
+    //     }else{
             const v = new verify({Email:Email,otp:otp});
             v.save().then((data)=>{
                 console.log(data);
                 sendEmail(data.Email,data.otp);
             })
-        }
-    })
+        // }
+    // })
     
     res.send("otp sent");
 });
