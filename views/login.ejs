@@ -66,6 +66,24 @@
     .register-link a:hover {
       text-decoration: underline;
     }
+
+    .forgot-password-link {
+      align-content: end;
+      margin-top: 10px;
+      font-size: 14px;
+      display: flex;
+      justify-content: flex-end; 
+    }
+
+    .forgot-password-link a {
+      align-self: flex-end;
+      color: #d9534f;
+      text-decoration: none;
+    }
+
+    .forgot-password-link a:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
 
@@ -83,12 +101,15 @@
 
     <label for="Password">Password:</label>
     <input type="password" name="Password" required>
-
+    <div class="forgot-password-link">
+      <a href="./forgot-password">Forgot Password?</a>
+    </div>
     <button type="submit">Login</button>
 
     <div class="register-link">
       Don't have an account? <a href="./register">Register here</a>
     </div>
+    
   </form>
 </body>
 
