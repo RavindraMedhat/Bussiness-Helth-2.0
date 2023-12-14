@@ -125,9 +125,9 @@ app.get("/sendOTP",(req,res)=>{
       });
 
     verify.findOneAndDelete({Email:Email})
-    .then(()=>{
+    .then((deleteddata)=>{
+        console.log(deleteddata);
         const v = new verify({Email:Email,otp:otp});
-    
         v.save().then((data)=>{
             console.log(data);
             sendEmail(data.Email,data.otp);
