@@ -6,7 +6,7 @@ const moment = require('moment');
 
 const randomstring = require('randomstring');
 const user = require("../models/Users");
-const verify = require("../models/verify");
+const verifyOtp = require("../models/verify");
 
 app.get('/register', (req, res) => {
     res.render('verifyEmail',{Email : "",errorMessage:""});
@@ -38,7 +38,7 @@ app.post('/register', async (req, res) => {
                 
                 }else{
 
-                    verify.findOne({Email : req.body.email})
+                    verifyOtp.findOne({Email : req.body.email})
                     .then((data)=>{
 
                         if(data){
@@ -51,14 +51,14 @@ app.post('/register', async (req, res) => {
                             
                             if (differenceInMinutes <= 1) {
                                 if(data.otp == req.body.otp){
-                                    verify.findOneAndDelete(data).then((data)=>{
+                                    verifyOtp.findOneAndDelete(data).then((data)=>{
                                         res.render("register",{Email : data.Email});
                                     });
                                 }else{
                                     res.render("verifyEmail",{Email : req.body.email , errorMessage:"Invalid email or OTP"});
                                 }
                             }else{
-                                verify.findOneAndDelete(data).then((data)=>{
+                                verifyOtp.findOneAndDelete(data).then((data)=>{
                                     console.log(data);
                                     res.render("verifyEmail",{Email : req.body.email , errorMessage:"Your OTP is expired"});
                                 });
@@ -135,7 +135,8 @@ app.get("/sendOTP",(req,res)=>{
     //             });
     //         })
     //     }else{
-            const v = new verify({Email:Email,otp:otp});
+            const v = new verifyOtp({Email:Email,otp:otp});
+
             v.save().then((data)=>{
                 console.log(data);
                 sendEmail(data.Email,data.otp);

@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
 
-const VerifySchema = new mongoose.Schema({
+const OtpSchema = new mongoose.Schema({
     Email : String,
     otp : String,
 },{
     timestamps: true
 });
 
-const Verify = mongoose.model('Verify', VerifySchema);
+const Otp = mongoose.model('Otp', OtpSchema);
 
-module.exports = Verify;
+module.exports = Otp;
