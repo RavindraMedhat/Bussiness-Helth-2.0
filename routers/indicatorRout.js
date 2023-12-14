@@ -40,4 +40,24 @@ app.post('/addIndicator', async (req, res) => {
     }
 });
 
+// Handle form submission for deleting an indicator
+app.post('/deleteIndicator/:id', async (req, res) => {
+    console.log("hii");
+    try {
+        const indicatorId = req.params.id;
+
+        // Find and delete the indicator by ID
+        const deletedIndicator = await Indicator.findByIdAndDelete(indicatorId);
+
+        if (!deletedIndicator) {
+            return res.status(404).send('Indicator not found');
+        }
+
+        res.redirect('/indicator/indicators');
+    } catch (error) {
+        console.error('Error deleting indicator:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
 module.exports = app;

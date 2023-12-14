@@ -2,7 +2,6 @@ const express = require('express')
 const app = express();
 // const moment = require('moment');
 const moment = require('moment-timezone');
-
 const nodemailer = require('nodemailer');
 
 const Indicator = require('../models/indicators');  
