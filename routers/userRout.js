@@ -122,34 +122,22 @@ app.get("/sendOTP",(req,res)=>{
     const otp = randomstring.generate({
         length: 6,
         charset: 'numeric',
-      });
+    });
 
-    // verify.findOne({Email:Email})
-    // .then((deleteddata)=>{
-    //     if(deleteddata){
-    //         verify.findByIdAndDelete(deleteddata._id).then((d)=>{
-    //             const v = new verify({Email:Email,otp:otp});
-    //             v.save().then((data)=>{
-    //                 console.log(data);
-    //                 sendEmail(data.Email,data.otp);
-    //             });
-    //         })
-    //     }else{
-            const v = new verifyOtp({Email:Email,otp:otp});
+    const v = new verifyOtp({Email:Email,otp:otp});
 
-            v.save().then((data)=>{
-                console.log(data);
-                sendEmail(data.Email,data.otp);
-            })
-        // }
-    // })
-    
-    res.send("otp sent");
+    v.save().then(async (data)=>{
+        console.log(data);
+        await sendEmail(data.Email,data.otp);
+        res.send("otp sent");
+    });  
+
 });
 
 
 async function sendEmail(email,otp) {
     try {
+        console.log("email otp 1",email,otp);
         // Create a Nodemailer transporter
         const transporter = nodemailer.createTransport({
             service: 'gmail',
@@ -158,7 +146,7 @@ async function sendEmail(email,otp) {
                 pass: 'xctj naln sjnj gjsv',  // replace with your Gmail password
             },
         });
-        
+        console.log("email otp 2",email,otp);
         // Email content
         const mailOptions = {
             from: 'mazzking666@gmail.com',  // replace with your Gmail email address
@@ -167,7 +155,9 @@ async function sendEmail(email,otp) {
             text: `OTP For Verify Your Email : - ${otp} \n\nThis otp expired in 2 minutes`,
         };
         // Send email
+        console.log("email otp 3",email,otp);
         await transporter.sendMail(mailOptions); 
+        console.log("email otp 4",email,otp);
         console.log('Email sent successfully');
     } catch (error) {
         console.error('Error sending email:', error);
