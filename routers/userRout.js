@@ -38,7 +38,7 @@ app.post('/register', async (req, res) => {
                 
                 }else{
 
-                    verifyOtp.findOne({Email : req.body.email,otp : req.body.req.body.otp})
+                    verifyOtp.findOne({Email : req.body.email,otp : req.body.otp})
                     .then((data)=>{
 
                         if(data){
