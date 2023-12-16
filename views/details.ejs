@@ -176,9 +176,6 @@
                             }]
                         },
                         options: {
-                                // maintainAspectRatio: true, // Set to false to control aspect ratio independently
-                                // aspectRatio: 10, // Set the aspect ratio (width / height)
-
                             scales: {
                                 r: {
                                     beginAtZero: true,
@@ -188,8 +185,6 @@
                             }
                         }
                     });
-
-                    // Populate the table
                     const tableBody = document.getElementById('tableBody');
                     tableBody.innerHTML = ''; // Clear previous content
                     for (let i = 0; i < departments.length; i++) {

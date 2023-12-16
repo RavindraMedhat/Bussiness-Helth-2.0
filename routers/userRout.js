@@ -22,7 +22,6 @@ app.post('/register', async (req, res) => {
                 ContactPerson: req.body.contactPerson,
                 MobileNumber: req.body.mobileNumber,
                 Roal : "Customer",
-                isVerify : false, 
             });
             
             // Save the user to the database
