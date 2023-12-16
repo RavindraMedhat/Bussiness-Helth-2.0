@@ -42,11 +42,10 @@
         display: flex;
         flex-direction: row;
         align-items: flex-start;
-        justify-content: center;            
+        justify-content: center;
         box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
         margin-top: 130px;
         background-color: #fff;
-        /* Center the content horizontally */
     }
 
     .chart-container {
@@ -76,6 +75,7 @@
         border: 1px solid #ddd;
         padding: 8px;
         text-align: left;
+        font-size: x-large;
     }
 
     th {
@@ -102,25 +102,42 @@
     }
 
     .back-button {
-            float: left;
-            display: block;
-            text-align: center;
-            margin-top: 20px;
-            padding: 10px;
-            background-color: #d9534f; /* Red color */
-            color: #fff;
-            text-decoration: none;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-            width: 120px; /* Adjust width as needed */
-            margin: 20px auto;
-            margin-bottom: 50px;
-            margin-left: 10px;
+        float: left;
+        display: block;
+        text-align: center;
+        margin-top: 20px;
+        padding: 10px;
+        background-color: #d9534f;
+        /* Red color */
+        color: #fff;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+        width: 120px;
+        /* Adjust width as needed */
+        margin: 20px auto;
+        margin-bottom: 50px;
+        margin-left: 10px;
+    }
+
+    .back-button:hover {
+        background-color: #ac2925;
+        /* Darker red on hover */
+    }
+
+    @media (max-width: 1080px) {
+
+        /* Apply styles for devices with a maximum width of 768px (adjust as needed) */
+        #data {
+            flex-direction: column;
         }
 
-        .back-button:hover {
-            background-color: #ac2925; /* Darker red on hover */
+        .chart-container,
+        .table-container {
+            width: 90%;
+            align-self: center;
         }
+    }
 </style>
 
 <body>
@@ -128,7 +145,7 @@
         <%= Company %>
     </h1>
     <h2>Business Health</h2>
-  
+
     <a href="/Company/companyList" class="back-button">Back</a>
 
     <div id="data">
@@ -182,6 +199,12 @@
                                     beginAtZero: true,
                                     max: 10,    // Set the maximum value on the radar axis
                                     stepSize: 1,    // Set the step size for the radar axis
+                                    pointLabels: {
+                                        font: {
+                                            Style: "bold",
+                                            size: 20
+                                        }
+                                    }
                                 }
                             }
                         }
