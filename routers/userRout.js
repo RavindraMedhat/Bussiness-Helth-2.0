@@ -29,7 +29,7 @@ app.post('/register', async (req, res) => {
             
             res.redirect("./login");
         }else if(req.body.email  && req.body.otp){
-            user.findOne({Email : req.body.email })
+            user.findOne({Email : { $regex: new RegExp( req.body.email , 'i') }  })
             .then((data)=>{
                 if(data){
                     
