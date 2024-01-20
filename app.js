@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const cookieParser = require("cookie-parser");
-const cors=require("cors");
+const cors = require("cors");
 
 const allRout = require("./routers/allRout");
 const port = process.env.PORT || 7485;
@@ -16,6 +16,8 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 db.once('open', () => {
     console.log('Connected to MongoDB database');
 });
+
+app.use("/public", express.static("public"));
 
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));

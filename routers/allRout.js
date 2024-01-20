@@ -45,7 +45,7 @@ app.use("/profile", verifyUser, profileRout);
 app.use("/Company", verifyUser, companyRout);
 app.use("/indicator", verifyAdmin, indicatorRout);
 
-app.get('/InvestFlow_Navigator',verifyUser, (req, res) => {
+app.get('/InvestFlow_Navigator', verifyUser, (req, res) => {
 
     res.render('InvestFlow_Navigator', {
         defaultInvestment: 100000,
@@ -53,8 +53,8 @@ app.get('/InvestFlow_Navigator',verifyUser, (req, res) => {
     });
 });
 
-app.use((req, res) => {
-    console.log(req.url);
-    res.redirect("/Company/companyList");
-})
+// app.use((req, res) => {
+//     console.log(req.url);
+//     res.redirect("/Company/companyList");
+// })
 module.exports = app;

@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -35,7 +33,7 @@
     h2 {
         margin-top: 20px;
     }
-    
+
     input[type="text"] {
         width: calc(100% - 10px);
         padding: 10px;
@@ -73,7 +71,7 @@
         padding: 10px;
         transition: background-color 0.3s;
     }
-    
+
 
     .company-list li:hover {
         background-color: #e3e3e3;
@@ -105,74 +103,88 @@
         margin-bottom: 100px;
         display: inline-block;
         margin-left: 10px;
-        color:  #d9534f; 
+        color: #d9534f;
         text-decoration: none;
-        font-size: 30px; /* Set the desired font size */
-        border-radius: 50%; /* Make it round */
-        background-color: #fff; /* Set the desired background color */
-        padding: 10px; /* Set the desired padding */
+        font-size: 30px;
+        /* Set the desired font size */
+        border-radius: 50%;
+        /* Make it round */
+        background-color: #fff;
+        /* Set the desired background color */
+        padding: 10px;
+        /* Set the desired padding */
         cursor: pointer;
-        transition: background-color 0.3s ease, color 0.3s ease; /* Add transition for a smooth hover effect */
+        transition: background-color 0.3s ease, color 0.3s ease;
+        /* Add transition for a smooth hover effect */
     }
 
     #profileLink:hover {
-        background-color: #fff; /* Set the desired hover background color */
-        color: #ac2925; /* Set the desired hover text color */
+        background-color: #fff;
+        /* Set the desired hover background color */
+        color: #ac2925;
+        /* Set the desired hover text color */
     }
-
-
 </style>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
 
 
 <body>
-    
-        <h1></h1>
-        <a href="/profile" id="profileLink"><i class="fas fa-user"></i></a>
-        <% if(isAdmin){ %>
-            <h1>Company List</h1>
-        <% } else { %>
-            <h1><%= CompanyName %></h1>
-        <% } %>
-     
-    <div id="searchContainer" >
-        <% if(isAdmin){ %>
-        <div>
-            <form action="./companyList" method="get" >
-                <h2>Search for a Company</h2>
-                <input type="text" id="str" name="str" placeholder="Enter company name">
-                <button id="searchButton">Search</button>
-            </form>
-        </div>
-        <a href="/indicator/indicators" id="addRatingLink">Add New Indicator</a>
-        <%}else{ %>
-        <a href="addRating" id="addRatingLink">Add New Rating</a>
-        <% } %>
-    </div>
 
-    <div>
-        <h2>Records</h2>
-        <ul id="companyList" class="company-list">
-            <% var oldScore = 0; %>
-            <% companies.forEach(function (company) { %>
-            <li onclick="window.location.href='/detail/<%= company.id %>'">
-                <span><%= company.CompanyName %></span>
-                <span><%= company.formattedTimestamp %>&nbsp;&nbsp;&nbsp;&nbsp;
-                    <% if (oldScore < company.overallScore) { %>
-                    <span style="color: green;">&nbsp;<%= company.overallScore %>&nbsp;&nbsp;<i
-                            class="fas fa-arrow-up"></i></span>
-                    <% } else if (oldScore > company.overallScore) { %>
-                    <span style="color: red;">&nbsp;<%= company.overallScore %>&nbsp;&nbsp;<i
-                            class="fas fa-arrow-down"></i></span>
-                    <% } else { %>
-                    <%= company.overallScore %>
-                    <% } %>
-                    <% oldScore = company.overallScore; %>
-            </li>
-            <% }); %>
-        </ul>
-    </div>
+    <h1></h1>
+    <a href="/profile" id="profileLink"><i class="fas fa-user"></i></a>
+    <% if(isAdmin){ %>
+        <h1>Company List</h1>
+        <% } else { %>
+            <h1>
+                <%= CompanyName %>
+            </h1>
+            <% } %>
+
+                <div id="searchContainer">
+                    <% if(isAdmin){ %>
+                        <div>
+                            <form action="./companyList" method="get">
+                                <h2>Search for a Company</h2>
+                                <input type="text" id="str" name="str" placeholder="Enter company name">
+                                <button id="searchButton">Search</button>
+                            </form>
+                        </div>
+                        <a href="/indicator/indicators" id="addRatingLink">Add New Indicator</a>
+                        <%}else{ %>
+                            <a href="addRating" id="addRatingLink">Add New Rating</a>
+                            <% } %>
+                </div>
+
+                <div class="button">
+                    <a href="/InvestFlow_Navigator">ABC</a>
+                </div>
+
+                <div>
+                    <h2>Records</h2>
+                    <ul id="companyList" class="company-list">
+                        <% var oldScore=0; %>
+                            <% companies.forEach(function (company) { %>
+                                <li onclick="window.location.href='/detail/<%= company.id %>'">
+                                    <span>
+                                        <%= company.CompanyName %>
+                                    </span>
+                                    <span>
+                                        <%= company.formattedTimestamp %>&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <% if (oldScore < company.overallScore) { %>
+                                                <span style="color: green;">&nbsp;<%= company.overallScore %>
+                                                        &nbsp;&nbsp;<i class="fas fa-arrow-up"></i></span>
+                                                <% } else if (oldScore> company.overallScore) { %>
+                                                    <span style="color: red;">&nbsp;<%= company.overallScore %>
+                                                            &nbsp;&nbsp;<i class="fas fa-arrow-down"></i></span>
+                                                    <% } else { %>
+                                                        <%= company.overallScore %>
+                                                            <% } %>
+                                                                <% oldScore=company.overallScore; %>
+                                </li>
+                                <% }); %>
+                    </ul>
+                </div>
 
 </body>
 

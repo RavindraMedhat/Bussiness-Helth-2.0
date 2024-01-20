@@ -48,18 +48,22 @@
         #result {
             margin-top: 20px;
             display: flex;
-            flex-direction: row;
-            justify-content: space-between;
+            gap: 5rem;
+            /* align-items: center; */
+            justify-content: space-between
+                /* flex-direction: row; */
+                /* justify-content: space-between; */
         }
 
-        #caclCustomer {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+        .caclCustomer {
+            width: 100%;
+            /* display: flex; */
+            /* flex-direction: column; */
+            /* justify-content: space-between; */
         }
 
         table {
-            width: 100%;
+            width: 100% !important;
             border-collapse: collapse;
             margin-top: 20px;
         }
@@ -95,7 +99,7 @@
         <!-- Results will be displayed here -->
     </div>
 
-    <table id="financialTable">
+    <!-- <table id="financialTable">
         <thead>
             <tr>
                 <th>Investment</th>
@@ -108,10 +112,10 @@
                 <th>Phase 4 Income</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody> -->
             <!-- Financial data rows will be added here dynamically -->
-        </tbody>
-    </table>
+        <!-- </tbody>
+    </table> -->
 
 
 
@@ -121,11 +125,17 @@
             const investment = parseFloat(document.getElementById('investment').value);
             const incomeTarget = parseFloat(document.getElementById('incomeTarget').value);
 
-            var NoCustomer1 = 50;
+            var NoCustomer1 = 10;
             var Rate1 = 0;
 
-            var Rate2 = 500000;
             var NoCustomer2 = 50;
+            var Rate2 = 0;
+
+            var NoCustomer3 = 0;
+            var Rate3 = 500000;
+
+            var NoCustomer4 = 0;
+            var Rate4 = 100000;
 
             var profitPercentage_1 = 20;
             var profitPercentage_2 = 33;
@@ -143,7 +153,9 @@
             try {
 
                 NoCustomer1 = parseInt(document.getElementById('NoCustomer1').value)
-                Rate2 = parseInt(document.getElementById('Rate2').value)
+                NoCustomer2 = parseInt(document.getElementById('NoCustomer2').value)
+                Rate3 = parseInt(document.getElementById('Rate3').value)
+                Rate4 = parseInt(document.getElementById('Rate4').value)
 
                 profitPercentage_1 = parseFloat(document.getElementById('profitPercentage_1').value);
                 profitPercentage_2 = parseFloat(document.getElementById('profitPercentage_2').value);
@@ -257,11 +269,16 @@
             var profitreturn_1 = profit_1 / maximumRisk_1;
             var profitreturn_2 = profit_2 / maximumRisk_2;
 
+            Rate1 = (incomeTarget / 12) / NoCustomer1
+            Rate2 = (incomeTarget / 12) / NoCustomer2
+            NoCustomer3 = (incomeTarget / 12) / Rate3
+            NoCustomer4 = (incomeTarget / 12) / Rate4
+
 
             // Display results in the #result div as a table
             const resultDiv = document.getElementById('result');
             resultDiv.innerHTML = `
-                <div id="caclCustomer">
+                <div class="caclCustomer">
                     <table>
                         <thead>
                             <tr>
@@ -302,7 +319,7 @@
                     <p>Maximum Risk: ₹${maximumRisk_2.toFixed(0)} for <input type="number" id="profitPercentage_2" name="profitPercentage" value="${profitPercentage_2}" min="0" max="100" required onchange="calculatePhases()">%  Profit: ₹${profit_2.toFixed(0)} Return: ${profitreturn_2.toFixed(2)}</p>
                 </div>    
 
-                <div id="caclCustomer">
+                <div class="caclCustomer">
                     <table>
                         <thead>
                             <tr>
@@ -315,15 +332,27 @@
                         <tbody>
                             <tr>
                                 <td><input type="number" id="NoCustomer1" name="NoCustomer1" value="${NoCustomer1}"  required onchange="calculatePhases()"></td>
-                                <td>500000</td>
-                                <td>50000000</td>
-                                <td>5000000</td>
+                                <td>${Rate1.toFixed(2)}</td>
+                                <td>${(NoCustomer1 * 100).toFixed(2)}</td>
+                                <td>${(NoCustomer1 * 10).toFixed(2)}</td>
+                            </tr> 
+                            <tr>
+                                <td><input type="number" id="NoCustomer2" name="NoCustomer2" value="${NoCustomer2}"  required onchange="calculatePhases()"></td>
+                                <td>${Rate2.toFixed(2)}</td>
+                                <td>${(NoCustomer2 * 10).toFixed(2)}</td>
+                                <td>${(NoCustomer2 * 1).toFixed(2)}</td>
                             </tr>
                             <tr>
-                                <td>40</td>
-                                <td><input type="number" id="Rate2" name="Rate2" value="${Rate2}"  required onchange="calculatePhases()"></td>
-                                <td>12500000</td>
-                                <td>1250000</td>
+                                <td>${NoCustomer3.toFixed(2)}</td>
+                                <td><input type="number" id="Rate3" name="Rate3" value="${Rate3}"  required onchange="calculatePhases()"></td>
+                                <td>${(NoCustomer3 * 100).toFixed(2)}</td>
+                                <td>${(NoCustomer3 * 10).toFixed(2)}</td>
+                            </tr>
+                            <tr>
+                                <td>${NoCustomer4.toFixed(2)}</td>
+                                <td><input type="number" id="Rate4" name="Rate4" value="${Rate4}"  required onchange="calculatePhases()"></td>
+                                <td>${(NoCustomer4 * 100).toFixed(2)}</td>
+                                <td>${(NoCustomer4 * 10).toFixed(2)}</td>
                             </tr>
                         </tbody> 
                     </table>  
@@ -333,21 +362,21 @@
             `;
 
             // Add data to the table
-            const tableBody = document.querySelector('#financialTable tbody');
-            // tableBody.innerHTML = '';  // Clear existing rows
-            const newRow = `
-                <tr>
-                    <td>${investment.toFixed(0)}</td>
-                    <td>${incomeTarget.toFixed(0)}</td>
-                    <td>${phase1Cost.toFixed(0)}</td>
-                    <td>${phase2Cost.toFixed(0)}</td>
-                    <td>${phase3Cost.toFixed(0)}</td>
-                    <td>${phase4Cost.toFixed(0)}</td>
-                    <td>${phase3Income.toFixed(0)}</td>
-                    <td>${phase4Income.toFixed(0)}</td>
-                </tr>
-            `;
-            tableBody.innerHTML = tableBody.innerHTML + newRow;
+            // const tableBody = document.querySelector('#financialTable tbody');
+            // // tableBody.innerHTML = '';  // Clear existing rows
+            // const newRow = `
+            //     <tr>
+            //         <td>${investment.toFixed(0)}</td>
+            //         <td>${incomeTarget.toFixed(0)}</td>
+            //         <td>${phase1Cost.toFixed(0)}</td>
+            //         <td>${phase2Cost.toFixed(0)}</td>
+            //         <td>${phase3Cost.toFixed(0)}</td>
+            //         <td>${phase4Cost.toFixed(0)}</td>
+            //         <td>${phase3Income.toFixed(0)}</td>
+            //         <td>${phase4Income.toFixed(0)}</td>
+            //     </tr>
+            // `;
+            // tableBody.innerHTML = tableBody.innerHTML + newRow;
         }
 
         // Call calculatePhases when the page is fully loaded
