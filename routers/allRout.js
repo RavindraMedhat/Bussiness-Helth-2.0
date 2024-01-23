@@ -53,8 +53,9 @@ app.get('/InvestFlow_Navigator', verifyUser, (req, res) => {
     });
 });
 
-// app.use((req, res) => {
-//     console.log(req.url);
-//     res.redirect("/Company/companyList");
-// })
+app.use((req, res) => {
+    console.log(req.url);
+    res.redirect("/Company/companyList");
+})
+
 module.exports = app;
